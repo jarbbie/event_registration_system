@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  # 1. The Database Service
+  db:
+    image: postgres:15-alpine
+    container_name: my_app_db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: mysecretpassword # We set the password here
+      POSTGRES_DB: my_app
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  # 2. The Backend Service
+  backend:
+    build: ./backend
+    container_name: my_app_backend
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db               # Matches the service name above
+      DB_USER: postgres
+      DB_PASSWORD: mysecretpassword
+      DB_NAME: my_app
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+
+  # 3. The Frontend Service
+  frontend:
+    build: ./frontend
+    container_name: my_app_frontend
+    ports:
+      - "3000:3000"
+    stdin_open: true # Fixes React exiting immediately in Docker
+    tty: true
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+
+volumes:
+  postgres_data:
