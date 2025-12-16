@@ -85,7 +85,7 @@ function Home() {
             placeholder="Weight (kg)"
             value={formData.weight}
             onChange={(e) =>
-              setFormData({ ...formData, weight: parseFloat(e.target.value) })
+              setFormData({ ...formData, weight: parseInt(e.target.value) })
             }
             required
           />
@@ -94,7 +94,7 @@ function Home() {
             placeholder="Height (cm)"
             value={formData.height}
             onChange={(e) =>
-              setFormData({ ...formData, height: parseFloat(e.target.value) })
+              setFormData({ ...formData, height: parseInt(e.target.value) })
             }
             required
           />
