@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./Home.css";
 
-const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8000/data";
+const API_URL = process.env.REACT_APP_API_URL;
 
 function Home() {
   const [formData, setFormData] = useState({
